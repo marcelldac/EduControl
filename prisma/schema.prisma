@@ -9,3 +9,12 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model student {
+  id String @id @default(cuid())
+  firstName String
+  lastName String
+  email String @unique
+  password String
+  registration Int @default(autoincrement())
+}
