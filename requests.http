@@ -9,3 +9,12 @@ Content-Type: application/json
     "email": "marcell@gmail.com",
     "password": "123"
 }
+###
+PUT http://localhost:3333/api/v1/students/clsgiob5c00005656vaevxn9t
+Content-Type: application/json
+
+{
+    "email":"asdsa"
+}
+###
+DELETE http://localhost:3333/api/v1/students/clsgjnzl000003tmkjw7cnp3t
