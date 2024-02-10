@@ -19,18 +19,29 @@ server.get("/api/v1/students", async (request: Request, response: Response) => {
   }
 });
 
+const emailVerification = async (email: string) => {
+  const emailExists = await prisma.student.findUnique({ where: { email } });
+  return emailExists;
+};
+
 server.post(
   "/api/v1/students",
   async (request: Request, response: Response) => {
     try {
       const { firstName, lastName, email, password } = request.body;
-
       const student = {
         firstName,
         lastName,
         email,
         password,
       };
+
+      const emailExists = await emailVerification(email);
+      if (emailExists) {
+        return response
+          .status(403)
+          .json({ message: "Email is already used", error: true });
+      }
 
       const createStudent = await prisma.student.create({ data: student });
       return response
