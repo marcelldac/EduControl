@@ -10,6 +10,11 @@ const prisma = new PrismaClient();
 server.use(cors());
 server.use(express.json());
 
+const emailVerification = async (email: string) => {
+  const emailExists = await prisma.student.findUnique({ where: { email } });
+  return emailExists;
+};
+
 server.get("/api/v1/students", async (request: Request, response: Response) => {
   try {
     const students = await prisma.student.findMany();
@@ -18,11 +23,6 @@ server.get("/api/v1/students", async (request: Request, response: Response) => {
     return response.status(500).json({ message: error, error: true });
   }
 });
-
-const emailVerification = async (email: string) => {
-  const emailExists = await prisma.student.findUnique({ where: { email } });
-  return emailExists;
-};
 
 server.post(
   "/api/v1/students",
@@ -47,6 +47,42 @@ server.post(
       return response
         .status(201)
         .json({ message: createStudent, error: false });
+    } catch (error) {
+      return response.status(500).json({ message: error, error: true });
+    }
+  }
+);
+
+server.put(
+  "/api/v1/students/:id",
+  async (request: Request, response: Response) => {
+    try {
+      const { firstName, lastName, email, password } = request.body;
+      const { id } = request.params;
+
+      const updateStudent = await prisma.student.update({
+        where: { id },
+        data: { firstName, lastName, email, password },
+      });
+
+      return response
+        .status(200)
+        .json({ message: updateStudent, error: false });
+    } catch (error) {
+      return response.status(500).json({ message: error, error: true });
+    }
+  }
+);
+
+server.delete(
+  "/api/v1/students/:id",
+  async (request: Request, response: Response) => {
+    try {
+      const { id } = request.params;
+
+      await prisma.student.delete({ where: { id } });
+
+      return response.sendStatus(204);
     } catch (error) {
       return response.status(500).json({ message: error, error: true });
     }
