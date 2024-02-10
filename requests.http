@@ -1,0 +1,11 @@
+GET http://localhost:3333/api/v1/students
+###
+POST http://localhost:3333/api/v1/students
+Content-Type: application/json
+
+{
+    "firstName": "Marcell",
+    "lastName": "Andrade",
+    "email": "marcell@gmail.com",
+    "password": "123"
+}
