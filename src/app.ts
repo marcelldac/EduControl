@@ -39,7 +39,7 @@ server.post(
       const emailExists = await emailVerification(email);
       if (emailExists) {
         return response
-          .status(403)
+          .status(400)
           .json({ message: "Email is already used", error: true });
       }
 
