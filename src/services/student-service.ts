@@ -1,27 +1,14 @@
 import { PrismaClient } from "@prisma/client";
-import { z } from "zod";
+import { validationSchema } from "../utils/validation";
+import { Student } from "../utils/types";
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient({
+  log: ["query"],
+});
 
 const emailVerification = async (email: string) => {
   const emailExists = await prisma.student.findUnique({ where: { email } });
   return emailExists;
-};
-
-const validationSchema = z.object({
-  firstName: z.string().optional(),
-  lastName: z.string().optional(),
-  email: z.string().email("Email should be in a valid format").optional(),
-  password: z
-    .string()
-    .min(8, "Password must be at least 8 characters long")
-    .optional(),
-});
-type Student = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
 };
 
 export const readStudents = async () => {
