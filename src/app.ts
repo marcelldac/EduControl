@@ -1,9 +1,17 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
 import { PrismaClient } from "@prisma/client";
+import { z } from "zod";
 
 const server = express();
 const port = process.env.PORT || 3333;
+
+const validationSchema = z.object({
+  firstName: z.string(),
+  lastName: z.string(),
+  email: z.string().email("Email should be in a valid format"),
+  password: z.string().min(8, "Password must be at least 8 characters long"),
+});
 
 const prisma = new PrismaClient();
 
@@ -29,6 +37,18 @@ server.post(
   async (request: Request, response: Response) => {
     try {
       const { firstName, lastName, email, password } = request.body;
+
+      const validation = validationSchema.safeParse({
+        firstName,
+        lastName,
+        email,
+        password,
+      });
+
+      if (!validation.success) {
+        return response.status(400).json({ message: validation, error: true });
+      }
+
       const student = {
         firstName,
         lastName,
@@ -59,6 +79,17 @@ server.put(
     try {
       const { firstName, lastName, email, password } = request.body;
       const { id } = request.params;
+
+      const validation = validationSchema.safeParse({
+        firstName,
+        lastName,
+        email,
+        password,
+      });
+
+      if (!validation.success) {
+        return response.status(400).json({ message: validation, error: true });
+      }
 
       const updateStudent = await prisma.student.update({
         where: { id },
