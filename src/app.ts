@@ -1,7 +1,5 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
-import { PrismaClient } from "@prisma/client";
-import { z } from "zod";
 import studentService from "./services/student-services";
 
 const server = express();
