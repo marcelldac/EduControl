@@ -7,6 +7,7 @@ const emailVerification = async (email: string) => {
   const emailExists = await prisma.student.findUnique({ where: { email } });
   return emailExists;
 };
+
 const validationSchema = z.object({
   firstName: z.string().optional(),
   lastName: z.string().optional(),
