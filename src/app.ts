@@ -2,33 +2,17 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import { PrismaClient } from "@prisma/client";
 import { z } from "zod";
+import studentService from "./services/student-services";
 
 const server = express();
 const port = process.env.PORT || 3333;
 
-const validationSchema = z.object({
-  firstName: z.string().optional(),
-  lastName: z.string().optional(),
-  email: z.string().email("Email should be in a valid format").optional(),
-  password: z
-    .string()
-    .min(8, "Password must be at least 8 characters long")
-    .optional(),
-});
-
-const prisma = new PrismaClient();
-
 server.use(cors());
 server.use(express.json());
 
-const emailVerification = async (email: string) => {
-  const emailExists = await prisma.student.findUnique({ where: { email } });
-  return emailExists;
-};
-
 server.get("/api/v1/students", async (request: Request, response: Response) => {
   try {
-    const students = await prisma.student.findMany();
+    const students = await studentService.readStudents();
     return response.status(200).json({ message: students, error: false });
   } catch (error) {
     return response.status(500).json({ message: error, error: true });
@@ -39,37 +23,8 @@ server.post(
   "/api/v1/students",
   async (request: Request, response: Response) => {
     try {
-      const { firstName, lastName, email, password } = request.body;
-
-      const validation = validationSchema.safeParse({
-        firstName,
-        lastName,
-        email,
-        password,
-      });
-
-      if (!validation.success) {
-        return response.status(400).json({ message: validation, error: true });
-      }
-
-      const student = {
-        firstName,
-        lastName,
-        email,
-        password,
-      };
-
-      const emailExists = await emailVerification(email);
-      if (emailExists) {
-        return response
-          .status(400)
-          .json({ message: "Email is already used", error: true });
-      }
-
-      const createStudent = await prisma.student.create({ data: student });
-      return response
-        .status(201)
-        .json({ message: createStudent, error: false });
+      const createStudent = await studentService.createStudent(request.body);
+      return response.status(createStudent.status).json(createStudent.data);
     } catch (error) {
       return response.status(500).json({ message: error, error: true });
     }
@@ -80,28 +35,12 @@ server.put(
   "/api/v1/students/:id",
   async (request: Request, response: Response) => {
     try {
-      const { firstName, lastName, email, password } = request.body;
       const { id } = request.params;
-
-      const validation = validationSchema.safeParse({
-        firstName,
-        lastName,
-        email,
-        password,
-      });
-
-      if (!validation.success) {
-        return response.status(400).json({ message: validation, error: true });
-      }
-
-      const updateStudent = await prisma.student.update({
-        where: { id },
-        data: { firstName, lastName, email, password },
-      });
-
-      return response
-        .status(200)
-        .json({ message: updateStudent, error: false });
+      const updateStudent = await studentService.updateStudent(
+        request.body,
+        id
+      );
+      return response.status(updateStudent.status).json(updateStudent.data);
     } catch (error) {
       return response.status(500).json({ message: error, error: true });
     }
@@ -113,10 +52,8 @@ server.delete(
   async (request: Request, response: Response) => {
     try {
       const { id } = request.params;
-
-      await prisma.student.delete({ where: { id } });
-
-      return response.sendStatus(204);
+      const removeStudent = await studentService.deleteStudent(id);
+      return response.sendStatus(removeStudent.status);
     } catch (error) {
       return response.status(500).json({ message: error, error: true });
     }
