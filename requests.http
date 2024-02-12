@@ -43,16 +43,36 @@ DELETE http://localhost:3333/api/v1/courses/clsjb8t430000kduz2ef4p2b3
 
 ################### Enrollment #########################
 
+### Enroll by id
 POST http://localhost:3333/api/v1/enroll/clsj1rm9l00007exgxfkwgu1o
 Content-Type: application/json
 
 {
  "courseID":"clsjbcdwv00006u0i9lgdqloq"
 }
-###
+
+### Unenroll by id
 POST http://localhost:3333/api/v1/unenroll/clsj1rm9l00007exgxfkwgu1o
 Content-Type: application/json
 
 {
  "courseID":"clsjbcdwv00006u0i9lgdqloq"
+}
+
+### Enroll by email
+POST http://localhost:3333/api/v1/enroll
+Content-Type: application/json
+
+{
+    "studentEmail":"maarcell@gmail.com",
+    "courseName":"Data Structures"
+}
+
+### Unenroll by email
+POST http://localhost:3333/api/v1/unenroll
+Content-Type: application/json
+
+{
+    "studentEmail":"maarcell@gmail.com",
+    "courseName":"Data Structures"
 }

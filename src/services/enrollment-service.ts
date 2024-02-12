@@ -15,6 +15,22 @@ export const enrollmentByID = async (studentID: string, courseID: string) => {
   });
   return enroll;
 };
+
+export const enrollmentByEmail = async (
+  studentEmail: string,
+  courseName: string
+) => {
+  const enroll = await prisma.student.update({
+    where: { email: studentEmail },
+    data: {
+      courses: {
+        connect: { name: courseName },
+      },
+    },
+  });
+  return enroll;
+};
+
 export const unenrollmentByID = async (studentID: string, courseID: string) => {
   const unenroll = await prisma.student.update({
     where: { id: studentID },
@@ -25,4 +41,19 @@ export const unenrollmentByID = async (studentID: string, courseID: string) => {
     },
   });
   return unenroll;
+};
+
+export const unenrollmentByEmail = async (
+  studentEmail: string,
+  courseName: string
+) => {
+  const enroll = await prisma.student.update({
+    where: { email: studentEmail },
+    data: {
+      courses: {
+        disconnect: { name: courseName },
+      },
+    },
+  });
+  return enroll;
 };
