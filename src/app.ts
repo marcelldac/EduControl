@@ -7,10 +7,13 @@ const server = express();
 const port = process.env.PORT || 3333;
 
 const validationSchema = z.object({
-  firstName: z.string(),
-  lastName: z.string(),
-  email: z.string().email("Email should be in a valid format"),
-  password: z.string().min(8, "Password must be at least 8 characters long"),
+  firstName: z.string().optional(),
+  lastName: z.string().optional(),
+  email: z.string().email("Email should be in a valid format").optional(),
+  password: z
+    .string()
+    .min(8, "Password must be at least 8 characters long")
+    .optional(),
 });
 
 const prisma = new PrismaClient();
