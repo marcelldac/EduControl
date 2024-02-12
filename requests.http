@@ -40,3 +40,21 @@ Content-Type: application/json
 }
 ###
 DELETE http://localhost:3333/api/v1/courses/clsjb8t430000kduz2ef4p2b3
+
+################### Enrollment #########################
+
+POST http://localhost:3333/api/v1/enroll
+Content-Type: application/json
+
+{
+ "studentID":"clsj1rm9l00007exgxfkwgu1o",
+ "courseID":"clsjbcdwv00006u0i9lgdqloq"
+}
+###
+POST http://localhost:3333/api/v1/unenroll
+Content-Type: application/json
+
+{
+ "studentID":"clsj1rm9l00007exgxfkwgu1o",
+ "courseID":"clsjbcdwv00006u0i9lgdqloq"
+}
