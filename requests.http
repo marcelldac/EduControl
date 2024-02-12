@@ -6,15 +6,15 @@ Content-Type: application/json
 {
     "firstName": "Marcell",
     "lastName": "Andrade",
-    "email": "marcell@gmail.com",
-    "password": "123"
+    "email": "maarcell@gmail.com",
+    "password": "12231238903"
 }
 ###
-PUT http://localhost:3333/api/v1/students/clsgiob5c00005656vaevxn9t
+PUT http://localhost:3333/api/v1/students/clsj04rky0000784ogwws7vcp
 Content-Type: application/json
 
 {
-    "email":"asdsa"
+    "email":"asdsa@asdas.com"
 }
 ###
-DELETE http://localhost:3333/api/v1/students/clsgjnzl000003tmkjw7cnp3t
+DELETE http://localhost:3333/api/v1/students/clsj04rky0000784ogwws7vcp
