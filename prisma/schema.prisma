@@ -10,11 +10,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model student {
+model Student {
   id String @id @default(cuid())
   firstName String
   lastName String
   email String @unique
   password String
   registration Int @default(autoincrement())
+  courses Courses[]
+  createAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Courses {
+  id String @id @default(cuid())
+  name String @unique
+  students Student[]
+  createAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
