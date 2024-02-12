@@ -25,7 +25,11 @@ type Student = {
 };
 
 export const readStudents = async () => {
-  const students = await prisma.student.findMany();
+  const students = await prisma.student.findMany({
+    include: {
+      courses: true,
+    },
+  });
   return students;
 };
 
