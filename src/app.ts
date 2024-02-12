@@ -13,5 +13,5 @@ server.use("/api/v1", studentRouter);
 server.use("/api/v1", courseRouter);
 
 server.listen(port, () => {
-  console.log(`App running on ${port} `);
+  console.log(`App running on ${port}`);
 });
