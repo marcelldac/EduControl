@@ -1,12 +1,12 @@
 import { Router } from "express";
 import {
-  enrollStudent,
-  unenrollStudent,
+  enrollStudentByID,
+  unenrollStudentByID,
 } from "../controllers/enrollment-controller";
 
 const server = Router();
 
-server.post("/enroll", enrollStudent);
-server.post("/unenroll", unenrollStudent);
+server.post("/enroll/:studentID", enrollStudentByID);
+server.post("/unenroll/:studentID", unenrollStudentByID);
 
 export default server;
