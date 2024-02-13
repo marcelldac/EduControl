@@ -4,3 +4,9 @@ export type Student = {
   email: string;
   password: string;
 };
+
+export type Teacher = {
+  name: string;
+  email: string;
+  isCoordinator: boolean;
+};
