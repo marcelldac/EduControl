@@ -57,3 +57,44 @@ export const unenrollmentByEmail = async (
   });
   return enroll;
 };
+
+//////////////////////// Teacher EnrollMents /////////////////////////////
+
+export const enrollCourseForTeacher = async (
+  teacherEmail: string,
+  courseName: string
+) => {
+  const doesTeacherEmailExists = await prisma.teacher.findUnique({
+    where: { email: teacherEmail },
+  });
+
+  if (!doesTeacherEmailExists)
+    return {
+      data: { message: "Teacher email not found", error: true },
+      status: 404,
+    };
+
+  const enroll = await prisma.teacher.update({
+    where: { email: teacherEmail },
+    data: {
+      courses: {
+        connect: { name: courseName },
+      },
+    },
+  });
+  return { data: { message: "", error: false }, status: 200 };
+};
+export const unenrollCourseForTeacher = async (
+  teacherEmail: string,
+  courseName: string
+) => {
+  const enroll = await prisma.teacher.update({
+    where: { email: teacherEmail },
+    data: {
+      courses: {
+        disconnect: { name: courseName },
+      },
+    },
+  });
+  return enroll;
+};
