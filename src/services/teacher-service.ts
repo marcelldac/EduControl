@@ -47,7 +47,16 @@ export const createTeacher = async (teacher: Teacher) => {
     };
   }
 
-  const createTeacher = await prisma.teacher.create({ data });
+  const createTeacher = await prisma.teacher.create({
+    data: {
+      name: teacher.name,
+      email: teacher.email,
+      isCoordinator: teacher.isCoordinator,
+      courses: {
+        connect: { name: courseName },
+      },
+    },
+  });
 
   return { data: { message: createTeacher, error: false }, status: 201 };
 };
