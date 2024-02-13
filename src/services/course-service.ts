@@ -1,8 +1,4 @@
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient({
-  log: ["query"],
-});
+import prisma from "../../prisma/prisma-client";
 
 export const readCourses = async () => {
   const courses = await prisma.courses.findMany({

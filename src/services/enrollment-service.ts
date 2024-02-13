@@ -1,8 +1,4 @@
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient({
-  log: ["query"],
-});
+import prisma from "../../prisma/prisma-client";
 
 export const enrollmentByID = async (studentID: string, courseID: string) => {
   const enroll = await prisma.student.update({

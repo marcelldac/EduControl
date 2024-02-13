@@ -1,10 +1,6 @@
-import { PrismaClient } from "@prisma/client";
 import { studentValidationSchema } from "../utils/validation";
 import { Student } from "../utils/types";
-
-const prisma = new PrismaClient({
-  log: ["query"],
-});
+import prisma from "../../prisma/prisma-client";
 
 const emailVerification = async (email: string) => {
   const emailExists = await prisma.student.findUnique({ where: { email } });

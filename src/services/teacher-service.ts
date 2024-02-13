@@ -1,10 +1,6 @@
-import { PrismaClient } from "@prisma/client";
 import { teacherValidationSchema } from "../utils/validation";
 import { Teacher } from "../utils/types";
-
-const prisma = new PrismaClient({
-  log: ["query"],
-});
+import prisma from "../../prisma/prisma-client";
 
 export const readTeacher = async () => {
   const teacher = await prisma.teacher.findMany({
