@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { validationSchema } from "../utils/validation";
+import { studentValidationSchema } from "../utils/validation";
 import { Student } from "../utils/types";
 
 const prisma = new PrismaClient({
@@ -28,7 +28,7 @@ export const createStudent = async (student: Student) => {
     password: student.password,
   };
 
-  const validation = validationSchema.safeParse(data);
+  const validation = studentValidationSchema.safeParse(data);
 
   if (!validation.success) {
     return { data: { message: validation, error: true }, status: 400 };
@@ -56,7 +56,7 @@ export const updateStudent = async (student: Student, id: string) => {
     password: student.password,
   };
 
-  const validation = validationSchema.safeParse(data);
+  const validation = studentValidationSchema.safeParse(data);
 
   if (!validation.success) {
     return { data: { message: validation, error: true }, status: 400 };
