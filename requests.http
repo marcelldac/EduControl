@@ -76,3 +76,25 @@ Content-Type: application/json
     "studentEmail":"maarcell@gmail.com",
     "courseName":"Data Structures"
 }
+
+################### Teacher Entity #########################
+
+GET http://localhost:3333/api/v1/teachers
+###
+POST http://localhost:3333/api/v1/teachers
+Content-Type: application/json
+
+{
+    "name":"Professor Marcell",
+    "email":"profmarcell@dacti.com.eu",
+    "isCoordinator": true
+}
+###
+PUT http://localhost:3333/api/v1/teachers/clsjb8t430000kduz2ef4p2b3
+Content-Type: application/json
+
+{
+    "name":"Big Data Analisys"
+}
+###
+DELETE http://localhost:3333/api/v1/teachers/clsjb8t430000kduz2ef4p2b3
