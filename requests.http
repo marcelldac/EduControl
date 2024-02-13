@@ -77,6 +77,26 @@ Content-Type: application/json
     "courseName":"Data Structures"
 }
 
+### Enroll teacher in a course
+
+POST http://localhost:3333/api/v1/teacher-enroll
+Content-Type: application/json
+
+{
+    "teacherEmail":"profmarcell@dacti.com.eu",
+    "courseName":"Data Structures"
+}
+
+### Unenroll teacher in a course
+
+POST http://localhost:3333/api/v1/teacher-unenroll
+Content-Type: application/json
+
+{
+    "teacherEmail":"profmarcell@gmail.com",
+    "courseName":"Data Structures"
+}
+
 ################### Teacher Entity #########################
 
 GET http://localhost:3333/api/v1/teachers
