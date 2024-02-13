@@ -86,15 +86,16 @@ Content-Type: application/json
 
 {
     "name":"Professor Marcell",
-    "email":"profmarcell@dacti.com.eu",
-    "isCoordinator": true
+    "email":"profamarcell@dacti.com.eu",
+    "isCoordinator": true,
+    "courseName":"Data Structures"
 }
 ###
-PUT http://localhost:3333/api/v1/teachers/clsjb8t430000kduz2ef4p2b3
+PUT http://localhost:3333/api/v1/teachers/clskg6cc500006jrmbe65g94m
 Content-Type: application/json
 
 {
-    "name":"Big Data Analisys"
+    "name":"Porofessor Martielo"
 }
 ###
-DELETE http://localhost:3333/api/v1/teachers/clsjb8t430000kduz2ef4p2b3
+DELETE http://localhost:3333/api/v1/teachers/clskg6cc500006jrmbe65g94m
