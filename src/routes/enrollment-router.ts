@@ -6,11 +6,11 @@ import {
   unenrollStudentByID,
 } from "../controllers/enrollment-controller";
 
-const server = Router();
+const enrollmentRouter = Router();
 
-server.post("/enroll/:studentID", enrollStudentByID);
-server.post("/enroll", enrollStudentByEmail);
-server.post("/unenroll/:studentID", unenrollStudentByID);
-server.post("/unenroll", unenrollStudentByEmail);
+enrollmentRouter.post("/enroll/:studentID", enrollStudentByID);
+enrollmentRouter.post("/enroll", enrollStudentByEmail);
+enrollmentRouter.post("/unenroll/:studentID", unenrollStudentByID);
+enrollmentRouter.post("/unenroll", unenrollStudentByEmail);
 
-export default server;
+export default enrollmentRouter;
