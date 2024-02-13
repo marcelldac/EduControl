@@ -32,7 +32,22 @@ model Courses {
   name String @unique
 
   students Student[]
+  teacher Teacher? @relation(fields: [teacherID], references: [id])
+  teacherID String? @default(cuid())
   
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Teacher {
+  id String @id @default(cuid())
+
+  name String
+  email String @unique
+  isCoordinator Boolean @default(false)
+
+  courses Courses[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
