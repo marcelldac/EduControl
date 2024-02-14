@@ -67,8 +67,8 @@ export const updateStudent = async (student: Student, id: string) => {
 };
 
 export const deleteStudent = async (id: string) => {
-  const remove = await prisma.student.delete({ where: { id } });
-  return { data: remove, status: 204 };
+  await prisma.student.delete({ where: { id } });
+  return { data: null, status: 204 };
 };
 
 const studentService = {
