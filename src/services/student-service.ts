@@ -44,12 +44,12 @@ export const createStudent = async (student: Student) => {
   return { data: { message: createStudent, error: false }, status: 201 };
 };
 
-export const updateStudent = async (student: Student, id: string) => {
+export const updateStudent = async (studentData: Student, id: string) => {
   const data = {
-    firstName: student.firstName,
-    lastName: student.lastName,
-    email: student.email,
-    password: student.password,
+    firstName: studentData.firstName,
+    lastName: studentData.lastName,
+    email: studentData.email,
+    password: studentData.password,
   };
 
   const validation = studentValidationSchema.safeParse(data);
