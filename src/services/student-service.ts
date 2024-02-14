@@ -55,7 +55,17 @@ export const updateStudent = async (studentData: Student, id: string) => {
   const validation = studentValidationSchema.safeParse(data);
 
   if (!validation.success) {
-    return { data: { message: validation, error: true }, status: 400 };
+    let issuesCache = [];
+    for (const issue of validation.error.issues) {
+      issuesCache.push({
+        path: issue.path,
+        errorMessage: issue.message,
+      });
+    }
+    return {
+      data: { message: issuesCache, error: true },
+      status: 400,
+    };
   }
 
   const student = await prisma.student.findUnique({
