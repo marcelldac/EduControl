@@ -58,6 +58,14 @@ export const updateStudent = async (student: Student, id: string) => {
     return { data: { message: validation, error: true }, status: 400 };
   }
 
+  const student = await prisma.student.findUnique({
+    where: { id },
+  });
+
+  if (!student) {
+    return { data: { message: "Student Not Found", error: true }, status: 404 };
+  }
+
   const updateStudent = await prisma.student.update({
     where: { id },
     data,
