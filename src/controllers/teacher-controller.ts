@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import teacherService from "../services/teacher-service";
-import { Teacher } from "../utils/types";
 
 export const read = async (request: Request, response: Response) => {
   try {
@@ -13,18 +12,10 @@ export const read = async (request: Request, response: Response) => {
 export const create = async (request: Request, response: Response) => {
   try {
     const { name, email, isCoordinator, courseName } = request.body;
-
-    const teacher: Teacher = {
-      name,
-      email,
-      isCoordinator,
-    };
-
     const createStudent = await teacherService.createTeacher(
-      teacher,
+      { name, email, isCoordinator },
       courseName
     );
-
     return response.status(createStudent.status).json(createStudent.data);
   } catch (error) {
     return response.status(500).json({ message: error, error: true });
