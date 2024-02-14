@@ -1,6 +1,7 @@
-import { teacherValidationSchema } from "../utils/validation";
-import { Teacher } from "../utils/types";
 import prisma from "../../prisma/prisma-client";
+import { Teacher } from "../utils/types";
+import { findTeacherByEmail } from "../utils/helpers";
+import { teacherValidationSchema } from "../utils/validation";
 
 export const readTeacher = async () => {
   const teacher = await prisma.teacher.findMany({
@@ -9,11 +10,6 @@ export const readTeacher = async () => {
     },
   });
   return teacher;
-};
-
-const findTeacherByEmail = async (email: string) => {
-  const emailExists = await prisma.teacher.findUnique({ where: { email } });
-  return emailExists;
 };
 
 export const createTeacher = async (teacher: Teacher, courseName: string) => {
