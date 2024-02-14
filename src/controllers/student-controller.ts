@@ -22,7 +22,6 @@ export const create = async (request: Request, response: Response) => {
 export const update = async (request: Request, response: Response) => {
   try {
     const { id } = request.params;
-
     if (!id) {
       return response
         .status(400)
