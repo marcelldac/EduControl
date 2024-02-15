@@ -400,35 +400,15 @@
       "Courses": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "description": "CUID Course id to be created"
-          },
           "name": {
             "type": "string",
             "description": "Course name to be created"
-          },
-          "teacher": {
-            "type": "teacher[]",
-            "description": "Course Teacher to be relationed"
-          },
-          "createdAt": {
-            "type": "string",
-            "description": "Course create date to be created"
-          },
-          "updatedAt": {
-            "type": "string",
-            "description": "Course update date to be created"
           }
         }
       },
       "Teacher": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "description": "CUID Teacher id to be created"
-          },
           "name": {
             "type": "string",
             "description": "Teacher name to be created"
@@ -441,17 +421,9 @@
             "type": "boolean",
             "description": "Teacher isCoordinator check to be validated"
           },
-          "courses": {
-            "type": "courses[]",
-            "description": "Course list for teacher to be created"
-          },
-          "createdAt": {
+          "courseName": {
             "type": "string",
-            "description": "Course create date to be created"
-          },
-          "updatedAt": {
-            "type": "string",
-            "description": "Course update date to be created"
+            "description": "Teacher course name"
           }
         }
       },
