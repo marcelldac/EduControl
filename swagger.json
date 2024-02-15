@@ -1,0 +1,503 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "EduControl - School Management System",
+    "description": "EduControl is a School management System made with Typescript using Express.js, Prisma ORM and PostgreSQL Database in Docker",
+    "contact": {
+      "name": "Support",
+      "email": "dacmarcell@gmail.com",
+      "url": "https://github.com/marcelldac"
+    },
+    "version": "1.0.0"
+  },
+  "paths": {
+    "tags": ["Students"],
+    "/api/v1/students": {
+      "get": {
+        "description": "View All Students",
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "description": "Create a Student",
+        "requestBody": {
+          "description": "Required data to create a student",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Student"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/students/:id": {
+      "put": {
+        "description": "Update a Student",
+        "requestBody": {
+          "description": "Required data to update a student",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Student"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "description": "Delete a Student",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/teachers": {
+      "get": {
+        "description": "View All Teachers",
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "description": "Create a Teacher",
+        "requestBody": {
+          "description": "Required data to create a Teacher",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Teacher"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/teachers/:id": {
+      "put": {
+        "description": "Update a Teacher",
+        "requestBody": {
+          "description": "Required data to update a Teacher",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Teacher"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "description": "Delete a Teacher",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/courses": {
+      "get": {
+        "description": "View All Courses",
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "description": "Create a Course",
+        "requestBody": {
+          "description": "Required data to create a Course",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Courses"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/courses/:id": {
+      "put": {
+        "description": "Update a Course",
+        "requestBody": {
+          "description": "Required data to update a course",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Courses"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "description": "Delete a Course",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/enroll/:studentID": {
+      "post": {
+        "description": "Enroll Student with ID",
+        "requestBody": {
+          "description": "Enroll Student in a Course",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EnrollmentByID"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/enroll": {
+      "post": {
+        "description": "Enroll Student with E-mail",
+        "requestBody": {
+          "description": "Enroll student in a course with e-mail",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EnrollmentByEmail"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/unenroll/:studentID": {
+      "post": {
+        "description": "Unenroll Student with ID",
+        "requestBody": {
+          "description": "Unenroll Student in a Course",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EnrollmentByID"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/unenroll": {
+      "post": {
+        "description": "Enroll Student with E-mail",
+        "requestBody": {
+          "description": "Enroll student in a course with e-mail",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EnrollmentByEmail"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/teacher-enroll": {
+      "post": {
+        "description": "Enroll Teacher with E-mail",
+        "requestBody": {
+          "description": "Enroll teacher in a course with e-mail",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TeacherEnrollment"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/teacher-unenroll": {
+      "post": {
+        "description": "Unenroll Teacher with E-mail",
+        "requestBody": {
+          "description": "Unenroll teacher in a course with e-mail",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TeacherEnrollment"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+
+  "components": {
+    "schemas": {
+      "Student": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "CUID Student id to be created"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "Student firstName to be created"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Student lastName to be created"
+          },
+          "email": {
+            "type": "string",
+            "description": "Student email to be created"
+          },
+          "password": {
+            "type": "string",
+            "description": "Student password to be created"
+          },
+          "registration": {
+            "type": "integer",
+            "description": "Student registration to be created"
+          }
+        }
+      },
+      "Courses": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "CUID Course id to be created"
+          },
+          "name": {
+            "type": "string",
+            "description": "Course name to be created"
+          },
+          "teacher": {
+            "type": "teacher[]",
+            "description": "Course Teacher to be relationed"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "Course create date to be created"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "Course update date to be created"
+          }
+        }
+      },
+      "Teacher": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "CUID Teacher id to be created"
+          },
+          "name": {
+            "type": "string",
+            "description": "Teacher name to be created"
+          },
+          "email": {
+            "type": "string",
+            "description": "Teacher e-mail to be created"
+          },
+          "isCoordinator": {
+            "type": "boolean",
+            "description": "Teacher isCoordinator check to be validated"
+          },
+          "courses": {
+            "type": "courses[]",
+            "description": "Course list for teacher to be created"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "Course create date to be created"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "Course update date to be created"
+          }
+        }
+      },
+      "EnrollmentByID": {
+        "type": "object",
+        "properties": {
+          "courseID": {
+            "type": "string",
+            "description": "Course ID to be linked with student"
+          }
+        }
+      },
+      "EnrollmentByEmail": {
+        "type": "object",
+        "properties": {
+          "studentEmail": {
+            "type": "string",
+            "description": "Student Email to be linked with Course"
+          },
+          "courseName": {
+            "type": "string",
+            "description": "Course name to be linked with student"
+          }
+        }
+      },
+      "TeacherEnrollment": {
+        "type": "object",
+        "properties": {
+          "teacherEmail": {
+            "type": "string",
+            "description": "Student Email to be linked with Course"
+          },
+          "courseName": {
+            "type": "string",
+            "description": "Course name to be linked with student"
+          }
+        }
+      }
+    }
+  }
+}

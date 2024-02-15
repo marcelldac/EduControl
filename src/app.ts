@@ -1,6 +1,13 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import cors from "cors";
-import studentController from "./controllers/student-controller";
+import swaggerUI from "swagger-ui-express";
+
+import studentRouter from "./routes/student-routes";
+import courseRouter from "./routes/course-router";
+import enrollmentRouter from "./routes/enrollment-router";
+import teacherRouter from "./routes/teacher-router";
+
+import swaggerDocument from "../swagger.json";
 
 const server = express();
 const port = process.env.PORT || 3333;
@@ -8,11 +15,12 @@ const port = process.env.PORT || 3333;
 server.use(cors());
 server.use(express.json());
 
-server.get("/api/v1/students", studentController.read);
-server.post("/api/v1/students", studentController.create);
-server.put("/api/v1/students/:id", studentController.update);
-server.delete("/api/v1/students/:id", studentController.remove);
+server.use("/api/v1/docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+server.use("/api/v1", studentRouter);
+server.use("/api/v1", courseRouter);
+server.use("/api/v1", enrollmentRouter);
+server.use("/api/v1", teacherRouter);
 
 server.listen(port, () => {
-  console.log(`App running on ${port} `);
+  console.log(`App running on ${port}`);
 });

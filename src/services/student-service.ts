@@ -1,30 +1,18 @@
-import { PrismaClient } from "@prisma/client";
-import { z } from "zod";
-
-const prisma = new PrismaClient();
+import { studentValidationSchema } from "../utils/validation";
+import { Student } from "../utils/types";
+import prisma from "../../prisma/prisma-client";
 
 const emailVerification = async (email: string) => {
   const emailExists = await prisma.student.findUnique({ where: { email } });
   return emailExists;
 };
-const validationSchema = z.object({
-  firstName: z.string().optional(),
-  lastName: z.string().optional(),
-  email: z.string().email("Email should be in a valid format").optional(),
-  password: z
-    .string()
-    .min(8, "Password must be at least 8 characters long")
-    .optional(),
-});
-type Student = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-};
 
 export const readStudents = async () => {
-  const students = await prisma.student.findMany();
+  const students = await prisma.student.findMany({
+    include: {
+      courses: true,
+    },
+  });
   return students;
 };
 
@@ -36,7 +24,7 @@ export const createStudent = async (student: Student) => {
     password: student.password,
   };
 
-  const validation = validationSchema.safeParse(data);
+  const validation = studentValidationSchema.safeParse(data);
 
   if (!validation.success) {
     return { data: { message: validation, error: true }, status: 400 };
@@ -56,18 +44,36 @@ export const createStudent = async (student: Student) => {
   return { data: { message: createStudent, error: false }, status: 201 };
 };
 
-export const updateStudent = async (student: Student, id: string) => {
+export const updateStudent = async (studentData: Student, id: string) => {
   const data = {
-    firstName: student.firstName,
-    lastName: student.lastName,
-    email: student.email,
-    password: student.password,
+    firstName: studentData.firstName,
+    lastName: studentData.lastName,
+    email: studentData.email,
+    password: studentData.password,
   };
 
-  const validation = validationSchema.safeParse(data);
+  const validation = studentValidationSchema.safeParse(data);
 
   if (!validation.success) {
-    return { data: { message: validation, error: true }, status: 400 };
+    let issuesCache = [];
+    for (const issue of validation.error.issues) {
+      issuesCache.push({
+        path: issue.path,
+        errorMessage: issue.message,
+      });
+    }
+    return {
+      data: { message: issuesCache, error: true },
+      status: 400,
+    };
+  }
+
+  const student = await prisma.student.findUnique({
+    where: { id },
+  });
+
+  if (!student) {
+    return { data: { message: "Student Not Found", error: true }, status: 404 };
   }
 
   const updateStudent = await prisma.student.update({
@@ -79,8 +85,8 @@ export const updateStudent = async (student: Student, id: string) => {
 };
 
 export const deleteStudent = async (id: string) => {
-  const remove = await prisma.student.delete({ where: { id } });
-  return { data: remove, status: 204 };
+  await prisma.student.delete({ where: { id } });
+  return { data: null, status: 204 };
 };
 
 const studentService = {
