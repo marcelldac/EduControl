@@ -379,10 +379,6 @@
       "Student": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "description": "CUID Student id to be created"
-          },
           "firstName": {
             "type": "string",
             "description": "Student firstName to be created"
@@ -398,10 +394,6 @@
           "password": {
             "type": "string",
             "description": "Student password to be created"
-          },
-          "registration": {
-            "type": "integer",
-            "description": "Student registration to be created"
           }
         }
       },
