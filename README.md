@@ -21,177 +21,192 @@
 
 The EduControl is an advanced school management platform that offers an integrated and efficient approach to administering all essential operations of an educational institution. From tracking student performance to resource management and communication with parents, EduControl simplifies and enhances every aspect of the school environment.
 
-### Documentação da EduControl
 
-#### Retorna todos os estudantes
+## Features
+
+- Create, Read, Update and Delete Users
+- Create, Read, Update and Delete Courses
+- Create, Read, Update and Delete Teachers
+- Enroll Student in a course
+- Unenroll Student of a course
+- Enroll Teacher in a course
+- Unenroll teacher of a course
+
+### EduControl Documentation
+
+#### Returns all students
 
 ```http
   GET /api/v1/students
 ```
 
-#### Cria um estudante
+#### Create a Student
 
 ```http
   POST /api/v1/students
 ```
 
-| Parâmetros   | Tipo       | Descrição                                   |
+| Parameters   | Type       | Description                                   |
 | :---------- | :--------- | :------------------------------------------ |
-| `firstName`      | `string` | **Obrigatório**. O Primeiro Nome Do Estudante |
-| `lastName`      | `string` | **Obrigatório**. O Ultimo Nome Do Estudante |
-| `email`      | `string` | **Obrigatório**. O E-mail Do Estudante |
-| `password`      | `string` | **Obrigatório**. A Senha Do Estudante |
+| `firstName`      | `string` | **Mandatory**. Student's First Name |
+| `lastName`      | `string` | **Mandatory**. Student's Last Name |
+| `email`      | `string` | **Mandatory**. Student's Email |
+| `password`      | `string` | **Mandatory**. Student's Password |
 
-#### Atualiza um estudante
+#### Update a Student
 
 ```http
   PUT /api/v1/students/:id
 ```
 
-| Parâmetros   | Tipo       | Descrição                                   |
+| Parameters   | Type       | Description                                   |
 | :---------- | :--------- | :------------------------------------------ |
-| `firstName`      | `string` | **Obrigatório**. O Primeiro Nome Do Estudante |
-| `lastName`      | `string` | **Obrigatório**. O Ultimo Nome Do Estudante |
-| `email`      | `string` | **Obrigatório**. O E-mail Do Estudante |
-| `password`      | `string` | **Obrigatório**. A Senha Do Estudante |
+| `firstName`      | `string` | **Mandatory**. Student's First Name |
+| `lastName`      | `string` | **Mandatory**. Student's Last Name |
+| `email`      | `string` | **Mandatory**. Student's Email |
+| `password`      | `string` | **Mandatory**. Student's Password |
 
-#### Deleta um estudante
+#### Delete a Student
 
 ```http
   DELETE /api/v1/students/:id
 ```
 
-#### Retorna todos os professores
+#### Returns all Teachers
 
 ```http
   GET /api/v1/teachers
 ```
 
-#### Cria um Professor
+#### Create a Teacher
 
 ```http
   POST /api/v1/teachers
 ```
 
-| Parâmetros   | Tipo       | Descrição                                   |
+| Parameters   | Type       | Description                                   |
 | :---------- | :--------- | :------------------------------------------ |
-| `name`      | `string` | **Obrigatório**. O Nome Do Professor |
-| `email`      | `string` | **Obrigatório**. O E-mail Do Professor |
-| `isCoordinator`      | `boolean` | **Obrigatório**. Se o professor é coordenador ou não |
-| `courseName`      | `string` | **Obrigatório**. Nome do curso que o professor será matriculado |
+| `name`      | `string` | **Mandatory**. Teacher's name |
+| `email`      | `string` | **Mandatory**. Teacher's email |
+| `isCoordinator`      | `boolean` | **Mandatory**. If teacher is coordinator or not |
+| `courseName`      | `string` | **Mandatory**. Name of course which teacher will be enrolled in |
 
-#### Atualiza um Professor
+#### Update a Teacher
 
 ```http
   PUT /api/v1/teachers/:id
 ```
 
-| Parâmetros   | Tipo       | Descrição                                   |
+| Parameters   | Type       | Description                                |
 | :---------- | :--------- | :------------------------------------------ |
-| `name`      | `string` | **Obrigatório**. O Nome Do Professor |
-| `email`      | `string` | **Obrigatório**. O E-mail Do Professor |
-| `isCoordinator`      | `boolean` | **Obrigatório**. Se o professor é coordenador ou não |
-| `courseName`      | `string` | **Obrigatório**. Nome do curso que o professor será matriculado |
+| `name`      | `string` | **Mandatory**. Teacher's name |
+| `email`      | `string` | **Mandatory**. Teacher's email |
+| `isCoordinator`      | `boolean` | **Mandatory**. If teacher is coordinator or not |
+| `courseName`      | `string` | **Mandatory**. Name of course which teacher will be enrolled in |
 
-#### Deleta um Professor
-
+#### Delete a Teacher
 ```http
   DELETE /api/v1/teachers/:id
 ```
 
-#### Retorna todos os cursos
+#### Returns all Courses
 
 ```http
   GET /api/v1/courses
 ```
 
-#### Cria um Curso
+#### Creates a Course
 
 ```http
   POST /api/v1/courses
 ```
 
-| Parâmetros   | Tipo       | Descrição                                   |
+| Parameters   | Type       | Description                                   |
 | :---------- | :--------- | :------------------------------------------ |
-| `name`      | `string` | **Obrigatório**. O Nome Do Curso |
+| `name`      | `string` | **Mandatory**. Course Name |
 
-#### Atualiza um Professor
+#### Update a Teacher
 
 ```http
   PUT /api/v1/courses/:id
 ```
 
-| Parâmetros   | Tipo       | Descrição                                   |
+| Parameters   | Type       | Description                                   |
 | :---------- | :--------- | :------------------------------------------ |
-| `name`      | `string` | **Obrigatório**. O Nome Do Curso |
+| `name`      | `string` | **Mandatory**. Course Name |
 
-#### Deleta um Professor
+#### Delete a Teacher
 
 ```http
   DELETE /api/v1/courses/:id
 ```
 
-### Matricula Estudante
+### Enroll Student
 
 ```http
   POST /api/v1/enroll/:studentID
 ```
 
-| Parâmetros   | Tipo       | Descrição                                   |
+| Parameters   | Type       | Description                                |
 | :---------- | :--------- | :------------------------------------------ |
-| `courseID`      | `string` | **Obrigatório**. O ID Do Curso |
+| `courseID`      | `string` | **Mandatory**. ID of the course which the student will be enrolled |
 
 
-### Desmatricula Estudante
+### Unenroll Student
 
 ```http
   POST /api/v1/unenroll/:studentID
 ```
 
-| Parâmetros   | Tipo       | Descrição                                   |
+| Parameters   | Type       | Description                                |
 | :---------- | :--------- | :------------------------------------------ |
-| `courseID`      | `string` | **Obrigatório**. O ID Do Curso |
+| `courseID`      | `string` | **Mandatory**. ID of the course which the student will be unenrolled |
 
-### Matricula Estudante por Email
+### Enroll Student via E-mail
 
 ```http
   POST /api/v1/enroll
 ```
 
-| Parâmetros   | Tipo       | Descrição                                   |
+| Parameters   | Type       | Description                                |
 | :---------- | :--------- | :------------------------------------------ |
-| `studentEmail`      | `string` | **Obrigatório**. E-mail do estudante a ser matriculado |
-| `courseName`      | `string` | **Obrigatório**. Nome do curso que receberá um novo aluno |
+| `studentEmail`      | `string` | **Mandatory**. Student Enrollment Email |
+| `courseName`      | `string` | **Mandatory**. The name of the course that will receive a new student |
 
-### Desmatricula Estudante por Email
+### Unenroll Student via E-mail
 
 ```http
   POST /api/v1/unenroll
 ```
 
-| Parâmetros   | Tipo       | Descrição                                   |
+| Parameters   | Type       | Description                                |
 | :---------- | :--------- | :------------------------------------------ |
-| `studentEmail`      | `string` | **Obrigatório**. E-mail do estudante a ser matriculado |
-| `courseName`      | `string` | **Obrigatório**. Nome do curso que receberá um novo aluno |
+| `studentEmail`      | `string` | **Mandatory**. Student Enrollment Email |
+| `courseName`      | `string` | **Mandatory**. The name of the course that will receive a new student |
 
-### Matricula Professor
+### Enroll Teacher
 
 ```http
   POST /api/v1/teacher-enroll
 ```
 
-| Parâmetros   | Tipo       | Descrição                                   |
+| Parameters   | Type       | Description                                |
 | :---------- | :--------- | :------------------------------------------ |
-| `teacherEmail`      | `string` | **Obrigatório**. E-mail do professor a ser matriculado no curso |
-| `courseName`      | `string` | **Obrigatório**. Nome do curso que receberá o novo professor |
+| `teacherEmail`      | `string` | **Mandatory**. Teacher Enrollment Email |
+| `courseName`      | `string` | **Mandatory**. The name of the course that will receive a new student |
 
-### Desmatricula Professor
+### Unenroll Teacher
 
 ```http
   POST /api/v1/teacher-unenroll
 ```
 
-| Parâmetros   | Tipo       | Descrição                                   |
+| Parameters   | Type       | Description                                |
 | :---------- | :--------- | :------------------------------------------ |
-| `teacherEmail`      | `string` | **Obrigatório**. E-mail do professor a ser matriculado no curso |
-| `courseName`      | `string` | **Obrigatório**. Nome do curso que receberá o novo professor |
+| `teacherEmail`      | `string` | **Mandatory**. Teacher Enrollment Email |
+| `courseName`      | `string` | **Mandatory**. The name of the course that will receive a new student |
+
+## Author
+
+- [@marcelldac](https://www.github.com/marcelldac)
+
