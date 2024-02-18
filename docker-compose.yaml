@@ -13,12 +13,6 @@ services:
     volumes:
       - .:/usr/app
       - /usr/app/node_modules
-  redis:
-    image: bitnami/redis:latest
-    expose:
-      - 6379
-    environment:
-      REDIS_PASSWORD: devmarcell
   # pg:
   #   image: postgres
   #   environment:
