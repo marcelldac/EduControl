@@ -13,5 +13,6 @@ export const studentValidationSchema = z.object({
 export const teacherValidationSchema = z.object({
   name: z.string().optional(),
   email: z.string().email().optional(),
+  password: z.string().min(8, "Password must be at least 8 characters long").optional(),
   isCoordinator: z.boolean().default(false).optional(),
 });
