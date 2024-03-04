@@ -16,6 +16,7 @@ export const createTeacher = async (teacher: Teacher, courseName: string) => {
   const data: Teacher = {
     name: teacher.name,
     email: teacher.email,
+    password: teacher.password,
     isCoordinator: teacher.isCoordinator,
   };
 
@@ -38,6 +39,7 @@ export const createTeacher = async (teacher: Teacher, courseName: string) => {
     data: {
       name: teacher.name,
       email: teacher.email,
+      password: teacher.password,
       isCoordinator: teacher.isCoordinator,
       courses: {
         connect: { name: courseName },
@@ -52,6 +54,7 @@ export const updateTeacher = async (teacher: Teacher, id: string) => {
   const data: Teacher = {
     name: teacher.name,
     email: teacher.email,
+    password: teacher.password,
     isCoordinator: teacher.isCoordinator,
   };
 
