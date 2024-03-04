@@ -44,6 +44,7 @@ model Teacher {
 
   name String
   email String @unique
+  password String
   isCoordinator Boolean @default(false)
 
   courses Courses[]
