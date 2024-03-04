@@ -8,5 +8,6 @@ export type Student = {
 export type Teacher = {
   name: string;
   email: string;
+  password: string;
   isCoordinator: boolean;
 };
