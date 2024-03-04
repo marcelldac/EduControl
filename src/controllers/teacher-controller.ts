@@ -11,9 +11,9 @@ export const read = async (request: Request, response: Response) => {
 };
 export const create = async (request: Request, response: Response) => {
   try {
-    const { name, email, isCoordinator, courseName } = request.body;
+    const { name, email, password, isCoordinator, courseName } = request.body;
     const createStudent = await teacherService.createTeacher(
-      { name, email, isCoordinator },
+      { name, email, isCoordinator, password },
       courseName
     );
     return response.status(createStudent.status).json(createStudent.data);
