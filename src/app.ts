@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import swaggerUI from "swagger-ui-express";
+import jwt from "jsonwebtoken";
 
 import studentRouter from "./routes/student-routes";
 import courseRouter from "./routes/course-router";
@@ -8,6 +9,11 @@ import enrollmentRouter from "./routes/enrollment-router";
 import teacherRouter from "./routes/teacher-router";
 
 import swaggerDocument from "../swagger.json";
+import {
+  findStudentByEmail,
+  findTeacherByEmail,
+  getUserProfile,
+} from "./utils/helpers";
 
 const server = express();
 const port = process.env.PORT || 3333;
@@ -70,6 +76,7 @@ server.post("/api/v1/login", async (req, res) => {
   }
 });
 
+server.get("/api/v1/profile", getUserProfile);
 server.use("/api/v1/docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 server.use("/api/v1", studentRouter);
 server.use("/api/v1", courseRouter);
