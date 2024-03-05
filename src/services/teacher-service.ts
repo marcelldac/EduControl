@@ -12,42 +12,37 @@ export const readTeacher = async () => {
   return teacher;
 };
 
-export const createTeacher = async (teacher: Teacher, courseName: string) => {
-  const data: Teacher = {
-    name: teacher.name,
-    email: teacher.email,
-    password: teacher.password,
-    isCoordinator: teacher.isCoordinator,
-  };
-
-  const validation = teacherValidationSchema.safeParse(data);
-
+export const createTeacher = async (
+  { name, email, password, isCoordinator }: Teacher,
+  courseName: string
+) => {
+  const validation = validateTeacher({ name, email, password, isCoordinator });
   if (!validation.success) {
     return { data: { message: validation, error: true }, status: 400 };
   }
 
-  const emailExists = await findTeacherByEmail(teacher.email);
+  const teacher = await findTeacherByEmail(email);
 
-  if (emailExists) {
+  if (teacher) {
     return {
       data: { message: "Email is already used", error: true },
       status: 400,
     };
   }
 
-  const createTeacher = await prisma.teacher.create({
+  const create = await prisma.teacher.create({
     data: {
-      name: teacher.name,
-      email: teacher.email,
-      password: teacher.password,
-      isCoordinator: teacher.isCoordinator,
+      name,
+      email,
+      password,
+      isCoordinator,
       courses: {
         connect: { name: courseName },
       },
     },
   });
 
-  return { data: { message: createTeacher, error: false }, status: 201 };
+  return { data: { message: create, error: false }, status: 201 };
 };
 
 export const updateTeacher = async (
