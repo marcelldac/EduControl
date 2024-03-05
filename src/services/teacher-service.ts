@@ -1,6 +1,6 @@
 import prisma from "../../prisma/prisma-client";
 import { Teacher } from "../utils/types";
-import { findTeacherByEmail } from "../utils/helpers";
+import { findTeacherByEmail, validateTeacher } from "../utils/helpers";
 import { teacherValidationSchema } from "../utils/validation";
 
 export const readTeacher = async () => {
@@ -50,15 +50,18 @@ export const createTeacher = async (teacher: Teacher, courseName: string) => {
   return { data: { message: createTeacher, error: false }, status: 201 };
 };
 
-export const updateTeacher = async (teacher: Teacher, id: string) => {
-  const data: Teacher = {
-    name: teacher.name,
-    email: teacher.email,
-    password: teacher.password,
-    isCoordinator: teacher.isCoordinator,
+export const updateTeacher = async (
+  { name, email, password, isCoordinator }: Teacher,
+  id: string
+) => {
+  const newTeacher: Teacher = {
+    name,
+    email,
+    password,
+    isCoordinator,
   };
 
-  const validation = teacherValidationSchema.safeParse(data);
+  const validation = validateTeacher(newTeacher);
 
   if (!validation.success) {
     return { data: { message: validation, error: true }, status: 400 };
@@ -66,7 +69,7 @@ export const updateTeacher = async (teacher: Teacher, id: string) => {
 
   const updateTeacher = await prisma.teacher.update({
     where: { id },
-    data,
+    data: newTeacher,
   });
 
   return { data: { message: updateTeacher, error: false }, status: 200 };

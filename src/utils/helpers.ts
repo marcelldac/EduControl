@@ -1,7 +1,8 @@
 import jwt from "jsonwebtoken";
 import { Request, Response } from "express";
 
-import { JwtPayload } from "./types";
+import { JwtPayload, Teacher } from "./types";
+import { teacherValidationSchema } from "./validation";
 import prisma from "../../prisma/prisma-client";
 
 //Teacher
@@ -16,6 +17,11 @@ export const findTeacherByID = async (id: string) => {
     where: { id },
   });
   return teacher;
+};
+
+export const validateTeacher = (teacher: Teacher) => {
+  const validation = teacherValidationSchema.safeParse(teacher);
+  return validation;
 };
 
 //Student
