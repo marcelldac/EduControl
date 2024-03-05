@@ -31,6 +31,7 @@ The EduControl is an advanced school management platform that offers an integrat
 - Unenroll Student of a course
 - Enroll Teacher in a course
 - Unenroll teacher of a course
+- Login student and teacher
 
 ### EduControl Documentation
 
