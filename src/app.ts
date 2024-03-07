@@ -22,6 +22,9 @@ server.use("/api/v1", studentRouter);
 server.use("/api/v1", courseRouter);
 server.use("/api/v1", enrollmentRouter);
 server.use("/api/v1", teacherRouter);
+server.use("*", (_, res) => {
+  res.status(404).json({ message: "Route not found Go to /api/v1/docs" });
+});
 
 server.listen(port, () => {
   console.log(`App running on ${port}`);
