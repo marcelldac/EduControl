@@ -1,7 +1,7 @@
 import prisma from "../../prisma/prisma-client";
+
 import { Teacher } from "../utils/types";
-import { findTeacherByEmail } from "../utils/helpers";
-import { teacherValidationSchema } from "../utils/validation";
+import { findTeacherByEmail, validateTeacher } from "../utils/helpers";
 
 export const readTeacher = async () => {
   const teacher = await prisma.teacher.findMany({
@@ -12,50 +12,51 @@ export const readTeacher = async () => {
   return teacher;
 };
 
-export const createTeacher = async (teacher: Teacher, courseName: string) => {
-  const data: Teacher = {
-    name: teacher.name,
-    email: teacher.email,
-    isCoordinator: teacher.isCoordinator,
-  };
-
-  const validation = teacherValidationSchema.safeParse(data);
-
+export const createTeacher = async (
+  { name, email, password, isCoordinator }: Teacher,
+  courseName: string
+) => {
+  const validation = validateTeacher({ name, email, password, isCoordinator });
   if (!validation.success) {
     return { data: { message: validation, error: true }, status: 400 };
   }
 
-  const emailExists = await findTeacherByEmail(teacher.email);
+  const teacher = await findTeacherByEmail(email);
 
-  if (emailExists) {
+  if (teacher) {
     return {
       data: { message: "Email is already used", error: true },
       status: 400,
     };
   }
 
-  const createTeacher = await prisma.teacher.create({
+  const create = await prisma.teacher.create({
     data: {
-      name: teacher.name,
-      email: teacher.email,
-      isCoordinator: teacher.isCoordinator,
+      name,
+      email,
+      password,
+      isCoordinator,
       courses: {
         connect: { name: courseName },
       },
     },
   });
 
-  return { data: { message: createTeacher, error: false }, status: 201 };
+  return { data: { message: create, error: false }, status: 201 };
 };
 
-export const updateTeacher = async (teacher: Teacher, id: string) => {
-  const data: Teacher = {
-    name: teacher.name,
-    email: teacher.email,
-    isCoordinator: teacher.isCoordinator,
+export const updateTeacher = async (
+  { name, email, password, isCoordinator }: Teacher,
+  id: string
+) => {
+  const newTeacher: Teacher = {
+    name,
+    email,
+    password,
+    isCoordinator,
   };
 
-  const validation = teacherValidationSchema.safeParse(data);
+  const validation = validateTeacher(newTeacher);
 
   if (!validation.success) {
     return { data: { message: validation, error: true }, status: 400 };
@@ -63,7 +64,7 @@ export const updateTeacher = async (teacher: Teacher, id: string) => {
 
   const updateTeacher = await prisma.teacher.update({
     where: { id },
-    data,
+    data: newTeacher,
   });
 
   return { data: { message: updateTeacher, error: false }, status: 200 };

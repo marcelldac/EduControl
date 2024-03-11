@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-1.1.x"]
 }
 
 generator erd {
@@ -44,6 +45,7 @@ model Teacher {
 
   name String
   email String @unique
+  password String
   isCoordinator Boolean @default(false)
 
   courses Courses[]

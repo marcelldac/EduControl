@@ -6,6 +6,7 @@ import studentRouter from "./routes/student-routes";
 import courseRouter from "./routes/course-router";
 import enrollmentRouter from "./routes/enrollment-router";
 import teacherRouter from "./routes/teacher-router";
+import authRouter from "./routes/auth-router";
 
 import swaggerDocument from "../swagger.json";
 
@@ -16,10 +17,14 @@ server.use(cors());
 server.use(express.json());
 
 server.use("/api/v1/docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+server.use("/api/v1", authRouter);
 server.use("/api/v1", studentRouter);
 server.use("/api/v1", courseRouter);
 server.use("/api/v1", enrollmentRouter);
 server.use("/api/v1", teacherRouter);
+server.use("*", (_, res) => {
+  res.status(404).json({ message: "Route not found Go to /api/v1/docs" });
+});
 
 server.listen(port, () => {
   console.log(`App running on ${port}`);
