@@ -16,12 +16,17 @@ export const readStudents = async () => {
   return students;
 };
 
-export const createStudent = async (student: Student) => {
+export const createStudent = async ({
+  firstName,
+  lastName,
+  email,
+  password,
+}: Student) => {
   const data = {
-    firstName: student.firstName,
-    lastName: student.lastName,
-    email: student.email,
-    password: student.password,
+    firstName,
+    lastName,
+    email,
+    password,
   };
 
   const validation = studentValidationSchema.safeParse(data);
@@ -30,7 +35,7 @@ export const createStudent = async (student: Student) => {
     return { data: { message: validation, error: true }, status: 400 };
   }
 
-  const emailExists = await emailVerification(student.email);
+  const emailExists = await emailVerification(email);
 
   if (emailExists) {
     return {
