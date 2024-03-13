@@ -1,7 +1,7 @@
 import { studentValidationSchema } from "../utils/validation";
 import { Student } from "../utils/types";
 import prisma from "../../prisma/prisma-client";
-import { findStudentByEmail } from "../utils/helpers";
+import { findStudentByEmail, findTeacherByEmail } from "../utils/helpers";
 
 export const readStudents = async () => {
   const students = await prisma.student.findMany({
@@ -32,8 +32,9 @@ export const createStudent = async ({
   }
 
   const studentExists = await findStudentByEmail(email);
+  const teacherExists = await findTeacherByEmail(email);
 
-  if (studentExists) {
+  if (studentExists || teacherExists) {
     return {
       data: { message: "Email is already used", error: true },
       status: 400,
