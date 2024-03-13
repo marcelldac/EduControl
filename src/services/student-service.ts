@@ -2,7 +2,7 @@ import { studentValidationSchema } from "../utils/validation";
 import { Student } from "../utils/types";
 import prisma from "../../prisma/prisma-client";
 
-const emailVerification = async (email: string) => {
+const findUserByEmail = async (email: string) => {
   const emailExists = await prisma.student.findUnique({ where: { email } });
   return emailExists;
 };
@@ -35,7 +35,7 @@ export const createStudent = async ({
     return { data: { message: validation, error: true }, status: 400 };
   }
 
-  const emailExists = await emailVerification(email);
+  const emailExists = await findUserByEmail(email);
 
   if (emailExists) {
     return {
