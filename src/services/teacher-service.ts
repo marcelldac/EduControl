@@ -1,11 +1,8 @@
 import prisma from "../../prisma/prisma-client";
 
 import { Teacher } from "../utils/types";
-import {
-  findStudentByEmail,
-  findTeacherByEmail,
-  validateTeacher,
-} from "../utils/helpers";
+import { findStudentByEmail, validateTeacher } from "../utils/helpers";
+import { findCourseByName } from "./course-service";
 
 export const readTeacher = async () => {
   const teacher = await prisma.teacher.findMany({
@@ -21,12 +18,21 @@ export const createTeacher = async (
   courseName: string
 ) => {
   const validation = validateTeacher({ name, email, password, isCoordinator });
+
   if (!validation.success) {
     return { data: { message: validation, error: true }, status: 400 };
   }
 
   const teacherExists = await findTeacherByEmail(email);
   const studentExists = await findStudentByEmail(email);
+  const courseExists = await findCourseByName(courseName);
+
+  if (!courseExists) {
+    return {
+      data: { message: "Course does not exists", error: true },
+      status: 400,
+    };
+  }
 
   if (teacherExists || studentExists) {
     return {
@@ -78,6 +84,20 @@ export const updateTeacher = async (
 export const removeTeacher = async (id: string) => {
   const removeTeacher = await prisma.teacher.delete({ where: { id } });
   return { data: removeTeacher, status: 204 };
+};
+
+export const findTeacherByID = async (id: string) => {
+  const teacher = await prisma.teacher.findUnique({
+    where: { id },
+  });
+  return teacher;
+};
+
+export const findTeacherByEmail = async (email: string) => {
+  const teacher = await prisma.teacher.findUnique({
+    where: { email },
+  });
+  return teacher;
 };
 
 const teacherService = {
