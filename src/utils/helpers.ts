@@ -4,20 +4,9 @@ import { Request, Response } from "express";
 import { JwtPayload, Teacher } from "./types";
 import { teacherValidationSchema } from "./validation";
 import prisma from "../../prisma/prisma-client";
+import { findTeacherByID } from "../services/teacher-service";
 
 //Teacher
-export const findTeacherByEmail = async (email: string) => {
-  const teacher = await prisma.teacher.findUnique({
-    where: { email },
-  });
-  return teacher;
-};
-export const findTeacherByID = async (id: string) => {
-  const teacher = await prisma.teacher.findUnique({
-    where: { id },
-  });
-  return teacher;
-};
 
 export const validateTeacher = (teacher: Teacher) => {
   const validation = teacherValidationSchema.safeParse(teacher);
