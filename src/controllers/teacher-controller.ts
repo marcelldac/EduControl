@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import joi from "joi";
+import Joi from "joi";
 
 import teacherService from "../services/teacher-service";
 
@@ -15,12 +15,12 @@ export const create = async (request: Request, response: Response) => {
   try {
     const { name, email, password, isCoordinator, courseName } = request.body;
 
-    const schema = joi.object({
-      name: joi.string().required(),
-      email: joi.string().email().required(),
-      password: joi.string().required(),
-      isCoordinator: joi.boolean().default(false),
-      courseName: joi.string().required(),
+    const schema = Joi.object({
+      name: Joi.string().required(),
+      email: Joi.string().email().required(),
+      password: Joi.string().required(),
+      isCoordinator: Joi.boolean().default(false),
+      courseName: Joi.string().required(),
     });
 
     const { error } = schema.validate(request.body);
