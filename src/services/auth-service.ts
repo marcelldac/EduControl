@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 
-import { findStudentByEmail, findTeacherByEmail } from "../utils/helpers";
+import { findStudentByEmail } from "../utils/helpers";
+import { findTeacherByEmail } from "./teacher-service";
 
 export const login = async (email: string, password: string) => {
   if (!email || !password) {
