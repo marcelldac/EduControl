@@ -1,5 +1,8 @@
 version: "3.9"
 
+# env_file:
+#   - path: .env
+
 services:
   app:
     build: .
@@ -10,13 +13,18 @@ services:
     command: npm run dev
     depends_on:
       - db
+    env_file:
+      - fileName: app/.env
     environment:
-      - DATABASE_URL=postgresql://postgres:nataia@db:5432/edu-control
+      - DATABASE_URL=${DATABASE_URL}
+      - JWT_SECRET=${JWT_SECRET}
   db:
     image: postgres
+    env_file:
+      - fileName: db/.env
     environment:
-      - POSTGRES_PASSWORD=nataia
-      - POSTGRES_DB=edu-control
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
     ports:
       - "5432:5432"
     volumes:
