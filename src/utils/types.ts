@@ -12,6 +12,6 @@ export type Teacher = {
   isCoordinator: boolean;
 };
 
-export type JwtPayload = {
-  id: string;
+export type JwtData = {
+  email: string;
 };
