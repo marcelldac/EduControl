@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import courseService from "../services/course-service";
 
-export const read = async (request: Request, response: Response) => {
+export const read = async (_: Request, response: Response) => {
   try {
     const courses = await courseService.readCourses();
     return response.status(200).json({ message: courses, error: false });
