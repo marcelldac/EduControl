@@ -1,76 +1,44 @@
 import jwt from "jsonwebtoken";
 
-import { findStudentByEmail } from "../utils/helpers";
-import { findTeacherByEmail } from "./teacher-service";
+import prisma from "../../prisma/prisma-client";
+import { JwtData } from "../utils/types";
 
 export const login = async (email: string, password: string) => {
-  if (!email || !password) {
+  const admin = await prisma.admin.findUnique({
+    where: { email },
+  });
+
+  if (!admin) {
     return {
-      data: { message: "E-mail and Password are Required", error: true },
-      status: 401,
+      data: { message: "User Not Found", error: true },
+      status: 404,
     };
   }
 
-  const student = await findStudentByEmail(email);
-  const teacher = await findTeacherByEmail(email);
+  const token = jwt.sign({ email: email }, process.env.JWT_SECRET ?? "", {
+    expiresIn: "30s",
+  });
 
-  if (student) {
-    if (email === student.email && password === student.password) {
-      const token = jwt.sign({ id: student.id }, process.env.JWT_SECRET ?? "", {
-        expiresIn: "8h",
-      });
+  return { data: { token, error: false }, status: 202 };
+};
 
-      const { password: _, ...studentLogin } = student;
+export const getJwtToken = (authorization: string) => {
+  const token = authorization.split(" ")[1];
+  return token;
+};
 
-      return {
-        data: {
-          student: studentLogin,
-          token,
-        },
-        status: 200,
-      };
-    } else {
-      return {
-        data: {
-          message: "E-mail or password are wrong",
-          error: true,
-        },
-        status: 401,
-      };
-    }
+export const verifyJwt = (token: string) => {
+  try {
+    const data = jwt.verify(token, process.env.JWT_SECRET ?? "") as JwtData;
+    return data.email;
+  } catch (err) {
+    return false;
   }
+};
 
-  if (teacher) {
-    if (email === teacher.email && password === teacher.password) {
-      const token = jwt.sign({ id: teacher.id }, process.env.JWT_SECRET ?? "", {
-        expiresIn: "8h",
-      });
-
-      const { password: _, ...teacherLogin } = teacher;
-
-      return {
-        data: {
-          student: teacherLogin,
-          token,
-        },
-        status: 200,
-      };
-    } else {
-      return {
-        data: {
-          message: "E-mail or password are wrong",
-          error: true,
-        },
-        status: 400,
-      };
-    }
-  }
-
-  if (!teacher && !student) {
-    return { data: { message: "User not found", error: true }, status: 404 };
-  }
-
-  return { data: { message: "Error", error: true }, status: 500 };
+export const getUserEmail = (token: string) => {
+  const id = verifyJwt(token);
+  return id;
 };
 
 export default login;
