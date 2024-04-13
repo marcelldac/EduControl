@@ -9,13 +9,9 @@ export const readCourses = async () => {
   return courses;
 };
 
-export const createCourses = async (courseName: string) => {
-  const data = {
-    name: courseName,
-  };
-
+export const createCourses = async (name: string) => {
   const doesCourseExists = await prisma.courses.findUnique({
-    where: data,
+    where: { name },
   });
 
   if (doesCourseExists) {
@@ -25,21 +21,24 @@ export const createCourses = async (courseName: string) => {
     };
   }
 
-  const course = await prisma.courses.create({ data });
+  const course = await prisma.courses.create({ data: { name } });
   return { data: { message: course, error: false }, status: 201 };
 };
 
-export const updateCourses = async (courseName: string, id: string) => {
-  const data = {
-    name: courseName,
-  };
-  const course = await prisma.courses.update({ where: { id }, data });
+export const updateCourses = async (name: string, id: string) => {
+  const course = await prisma.courses.update({ where: { id }, data: { name } });
   return { data: { message: course, error: false }, status: 200 };
 };
 
 export const removeCourses = async (id: string) => {
   const remove = await prisma.courses.delete({ where: { id } });
   return { data: remove, status: 204 };
+};
+
+export const findCourseByName = async (name: string) => {
+  return await prisma.courses.findUnique({
+    where: { name },
+  });
 };
 
 const courseService = {
