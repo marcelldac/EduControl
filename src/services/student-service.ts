@@ -1,7 +1,8 @@
 import { studentValidationSchema } from "../utils/validation";
 import { Student } from "../utils/types";
 import prisma from "../../prisma/prisma-client";
-import { findStudentByEmail, findTeacherByEmail } from "../utils/helpers";
+import { findStudentByEmail } from "../utils/helpers";
+import { findTeacherByEmail } from "./teacher-service";
 
 export const readStudents = async () => {
   const students = await prisma.student.findMany({
