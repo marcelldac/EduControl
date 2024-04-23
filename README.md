@@ -3,23 +3,23 @@
   <br>
   <br>
   <div>
-    <a href="https://github.com/marcelldac/EduControl/issues">
-      <img src="https://img.shields.io/github/issues/marcelldac/EduControl?color=fab387&labelColor=303446&style=for-the-badge">
+    <a href="https://github.com/marcelldac/EduX/issues">
+      <img src="https://img.shields.io/github/issues/marcelldac/EduX?color=fab387&labelColor=303446&style=for-the-badge">
     </a>
-    <a href="https://github.com/marcelldac/EduControl/stargazers">
-      <img src="https://img.shields.io/github/stars/marcelldac/EduControl?color=ca9ee6&labelColor=303446&style=for-the-badge">
+    <a href="https://github.com/marcelldac/EduX/stargazers">
+      <img src="https://img.shields.io/github/stars/marcelldac/EduX?color=ca9ee6&labelColor=303446&style=for-the-badge">
     </a>
-    <a href="https://github.com/marcelldac/EduControl">
-      <img src="https://img.shields.io/github/repo-size/marcelldac/EduControl?color=ea999c&labelColor=303446&style=for-the-badge">
+    <a href="https://github.com/marcelldac/EduX">
+      <img src="https://img.shields.io/github/repo-size/marcelldac/EduX?color=ea999c&labelColor=303446&style=for-the-badge">
     </a>
   </div>
 </h1>
 
-<h1 align="center">📖 EduControl 📖</h1>
+<h1 align="center">📖 EduX 📖</h1>
 
-## EduControl - School System Management
+## EduX - School System Management
 
-The EduControl is an advanced school management platform that offers an integrated and efficient approach to administering all essential operations of an educational institution. From tracking student performance to resource management and communication with parents, EduControl simplifies and enhances every aspect of the school environment.
+The EduX is an advanced school management platform that offers an integrated and efficient approach to administering all essential operations of an educational institution. From tracking student performance to resource management and communication with parents, EduX simplifies and enhances every aspect of the school environment.
 
 
 ## Features
@@ -33,7 +33,7 @@ The EduControl is an advanced school management platform that offers an integrat
 - Unenroll teacher of a course
 - Login student and teacher
 
-### EduControl Documentation
+### EduX Documentation
 
 #### Returns all students
 
